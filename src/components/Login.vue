@@ -37,22 +37,22 @@ export default {
   data() {
     return {
       loginForm: {
-        username: "admin123",
-        password: "123456789"
+        username: "admin",
+        password: "123456"
       },
       loginFormRules: {
         username: [
           { required: true, message: "请输入用户名" },
           {
-            min: 8,
+            min: 3,
             max: 10,
-            message: "长度在 8 到 10 个字符",
+            message: "长度在 3 到 10 个字符",
             trigger: "blur"
           }
         ],
         password: [
           { required: true, message: "请输入登陆密码" },
-          { min: 8, max: 10, message: "长度在 8 到 10 个字符", trigger: "blur" }
+          { min: 3, max: 10, message: "长度在 3 到 10 个字符", trigger: "blur" }
         ]
       }
     };
@@ -65,15 +65,17 @@ export default {
       this.$refs.loginFormRef.validate(validateResult => {
         if (validateResult) {
           this.axios({
-            url: "account/login",
+            url: "login",
             method: "post",
             data: this.loginForm
           })
             .then(result => {
-              const { data, status } = result;
+              const { status,data } = result;
+              console.log(data)
+              console.log(data.data.token);
               if (status == 200) {
                 this.$message.success("登陆成功");
-                sessionStorage.setItem("token", "accessToken");
+                sessionStorage.setItem("token", data.data.token);
                 this.$router.push("/home");
               }
             })
