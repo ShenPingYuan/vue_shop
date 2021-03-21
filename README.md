@@ -1,4 +1,4 @@
-# vue_shop
+# homework.vue
 
 ## Project setup
 ```
